@@ -1,8 +1,8 @@
 package typespeed
 
 import (
+	_ "embed"
 	"gopkg.in/yaml.v3"
-	_"embed"
 )
 
 //go:embed library.yaml
