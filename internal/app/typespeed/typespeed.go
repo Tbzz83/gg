@@ -11,7 +11,6 @@ import (
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/huh"
-	"github.com/charmbracelet/lipgloss"
 )
 
 const (
@@ -243,6 +242,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 //		m.State.SeenIdxSet = make(map[int]int)
 //	}
 
+	m.TextInput.SetCursor(1+m.TextInput.Position())
+	fmt.Println(m.TextInput.Position())
+	m.TextInput.Placeholder = "Tet"
 	m.TextInput, cmd = m.TextInput.Update(msg)
 
 	return m, cmd
@@ -359,12 +361,10 @@ func updateCPM(s *State) {
 func (m Model) View() string {
 
 	m.InputStr = m.TextInput.View()
-	promptStr := m.PromptStr[m.PromptIdx:]
 
 	return fmt.Sprintf(
-		"%s%s\n",
+		"%s\n",
 		m.InputStr,
-		GREY + promptStr + RESET,
 		)
 }
 
@@ -459,7 +459,7 @@ func Run() {
 
 	ti := textinput.New()
 	ti.Focus()
-	ti.CompletionStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("11"))
+
 
 	p := tea.NewProgram(Model{
 		TextInput: ti,
